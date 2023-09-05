@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Add</title>
+    <style>
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle, rgba(254, 188, 217, 0.8) 22%, rgba(215, 229, 195, 0.781) 61%, rgba(160, 203, 255, 0.807) 100%);
+
+
+  
+}
+
+
+.container{
+    max-width: 500px;
+  background: #fff;
+  width: 800px;
+  padding: 25px 40px 10px 40px;
+  box-shadow: 0px 0px 50px rgba(147, 213, 255, 0.927);
+  margin-top: -5em;
+  border-radius: 2em;
+}
+
+.container form{
+  padding: 30px 0 0 0;
+}
+
+
+@media (max-width: 700px) {
+  .container .text{
+    font-size: 30px;
+  }
+  .container form{
+    padding: 10px 0 0 0;
+  }
+ 
+}
+
+
+
+
+
+
+
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+       
+
+        input[type="text"],
+        input[type="number"] {
+            width: 60%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            float: right;
+
+        }
+
+        input[type="submit"] {
+            background-color: #55a7ff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="button"] {
+            background-color: #0056b3;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        input[type="button"]:hover {
+            background-color: #55a7ff;
+        }
+        .center{
+            text-align: center;
+        }
+     
+        .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#centered-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 100px; /* You can adjust the maximum width as needed */
+}
+#centered-input2 {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3 class="center">Créer nouveau produit</h3>
+        <br>
+        <form action="/save-product" method="POST">
+            <div class="form-group">
+                <label for="productName" >Désignation :</label>
+                <input type="text" id="productName" name="productName" required>
+            </div>
+           
+            <div class="form-group">
+                <label for="price">Prix (par unité) :</label>
+                <input type="number" id="price" name="price" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantité :</label>
+                <input type="number" id="quantity" name="quantity" required>
+            </div>
+            <div class="form-group">
+                <label for="discount1"> 1ère Remise (%) :</label>
+                <input type="number" id="discount1" name="discount1" step="0.1">
+            </div>
+            <div class="form-group">
+                <label for="discount2"> 2ème Remise (%) :</label>
+                <input type="number" id="discount2" name="discount2" step="0.1">
+            </div>
+            <div class="form-group">
+                <label for="tva">TVA (%) :</label>
+                <input type="number" id="tva" name="tva" step="0.1">
+            </div>
+            <br>
+            <br>
+            <div class="form-group center-container">
+                <input type="submit" value="Ajouter" id="centered-input">
+            </div>
+        </form>
+
+
+
+<br> <br>
+<div class="form-group center-container">
+    <a href="{{ url_for('product_list') }}"><input type="button" value="Afficher table de produits" id="centered-input2"></a>
+</div>
+    </div>
+
+   
+
+
+</body>
+</html>

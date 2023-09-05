@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Product List</title>
+    <style>
+
+
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #b3d1fd;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  color: #9DBFAF;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 5px rgba(178, 179, 180, 0.927);
+
+}
+
+
+.wrap{
+  width: 20%;
+  float: right;
+  padding-right: 1em;
+}
+
+
+
+.container{
+  max-width:93%;
+  background: #fff;
+  width: 100%;
+  padding: 20px ;
+  box-shadow: 0px 0px 50px #55d3f9;
+  margin-top: -25%;
+  border-radius: 2em;
+  overflow-x: auto;
+  text-align: center;
+}
+
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+background-image: linear-gradient(45deg, #fdcdebcd 0%, #adeafddc 52%, #cffde4c4 90%);
+  
+
+
+  
+}
+	
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #a4e1f42c;
+
+        }
+
+        table, th, td {
+            border: 1px solid #89cee3b4;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+
+        }
+
+        tr:nth-child(even) {
+  background-color: #cdeff92c
+}
+        th {
+            background-color: #89cee3;
+            color: #fff;
+            font-size: 15px;
+            text-shadow: 2px 2px 8px #363535;
+            cursor: pointer;
+
+        }
+    .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#centered-input2 {
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    border: 2px solid #fedff3;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #ffecf8;
+}
+     
+    </style>
+</head>
+<body>
+
+
+<br>
+<div class="container">
+
+
+<div class="form-group center-container">
+    <a href="{{ url_for('index') }}"><input type="button" value="Ajouter un produit" id="centered-input2"></a>
+</div>
+<br><br>
+
+    <div class="wrap">
+        <div class="search">
+           <input type="text" class="searchTerm" id="searchInput" placeholder="Search by Designation">
+          </button>
+        </div>
+     </div>
+
+
+    <table id="productTable">
+        <tr>
+            <th onclick="sortTable(0)">Désignation</th>
+            <th>Prix <span style="font-size: 10px;"> (par unité)</span></th>
+            <th>1ère Remise (%)</th>
+            <th>2ème Remise (%)</th>
+            <th>TVA (%)</th> 
+            <th>Prix net</th>
+            <th>Quantité</th>
+            <th>Total</th>
+        </tr>
+
+        {% for product in products %}
+        <tr>
+            <td>{{ product[1] }}</td>
+            <td>{{ product[2] }}</td>
+            <td>{{ product[3] }}</td>
+            <td>{{ product[4] }}</td>
+            <td>{{ product[5] }}</td>
+            <td>{{ product[7] }}</td>
+            <td>{{ product[6] }}</td>
+            <td>{{ product[8] }}</td>
+
+
+        </tr>
+        {% endfor %}
+        <!-- Add your table rows with product data here -->
+    </table>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const productTable = document.getElementById("productTable");
+        const rows = productTable.getElementsByTagName("tr");
+
+        searchInput.addEventListener("input", function () {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            for (let i = 1; i < rows.length; i++) { // Start from index 1 to skip the header row
+                const designation = rows[i].getElementsByTagName("td")[0].textContent.toLowerCase();
+                if (designation.includes(searchTerm)) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        });
+    });
+</script>
+
+
+
+<script>
+    function sortTable(n) {
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      table = document.getElementById("productTable");
+      switching = true;
+      //Set the sorting direction to ascending:
+      dir = "asc"; 
+      /*Make a loop that will continue until
+      no switching has been done:*/
+      while (switching) {
+        //start by saying: no switching is done:
+        switching = false;
+        rows = table.rows;
+        /*Loop through all table rows (except the
+        first, which contains table headers):*/
+        for (i = 1; i < (rows.length - 1); i++) {
+          //start by saying there should be no switching:
+          shouldSwitch = false;
+          /*Get the two elements you want to compare,
+          one from current row and one from the next:*/
+          x = rows[i].getElementsByTagName("TD")[n];
+          y = rows[i + 1].getElementsByTagName("TD")[n];
+          /*check if the two rows should switch place,
+          based on the direction, asc or desc:*/
+          if (dir == "asc") {
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              //if so, mark as a switch and break the loop:
+              shouldSwitch= true;
+              break;
+            }
+          } else if (dir == "desc") {
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+              //if so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
+          }
+        }
+        if (shouldSwitch) {
+          /*If a switch has been marked, make the switch
+          and mark that a switch has been done:*/
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+          //Each time a switch is done, increase this count by 1:
+          switchcount ++;      
+        } else {
+          /*If no switching has been done AND the direction is "asc",
+          set the direction to "desc" and run the while loop again.*/
+          if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+          }
+        }
+      }
+    }
+    </script>
+    
+
+</body>
+</html>
